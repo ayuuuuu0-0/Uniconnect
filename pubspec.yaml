@@ -64,6 +64,7 @@ flutter:
     - assets/images/chat.png
     - assets/images/login.png
     - assets/images/signup_top.png
+    - assets/images/newSplash.png
 
   fonts:
     - family: Bebas

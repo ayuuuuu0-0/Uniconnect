@@ -14,13 +14,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() {
-    Timer(const Duration(seconds: 6), () async {
+    Timer(const Duration(seconds: 4), () async {
       if (FirebaseAuth.instance.currentUser != null) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
       else {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
       }
     });
