@@ -25,7 +25,6 @@ class SignUpBody extends StatefulWidget {
 }
 
 class _SignUpBodyState extends State<SignUpBody> {
-
   String userPhotoUrl = '';
   File? _image;
   bool _isLoading = false;
@@ -39,25 +38,23 @@ class _SignUpBodyState extends State<SignUpBody> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void _getFromCamera() async
-  {
-    XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera);
+  void _getFromCamera() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
 
-  void _getFromGallery() async
-  {
-    XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery);
+  void _getFromGallery() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
 
   void _cropImage(filePath) async {
-    CroppedFile? croppedImage = await ImageCropper().cropImage(
-        sourcePath: filePath, maxHeight: 1080, maxWidth: 1080);
+    CroppedFile? croppedImage = await ImageCropper()
+        .cropImage(sourcePath: filePath, maxHeight: 1080, maxWidth: 1080);
 
     if (croppedImage != null) {
       setState(() {
@@ -88,7 +85,8 @@ class _SignUpBodyState extends State<SignUpBody> {
                           color: Colors.purple,
                         ),
                       ),
-                      Text('Camera',
+                      Text(
+                        'Camera',
                         style: TextStyle(color: Colors.purple),
                       ),
                     ],
@@ -107,7 +105,8 @@ class _SignUpBodyState extends State<SignUpBody> {
                           color: Colors.purple,
                         ),
                       ),
-                      Text('Gallery',
+                      Text(
+                        'Gallery',
                         style: TextStyle(color: Colors.purple),
                       ),
                     ],
@@ -116,20 +115,20 @@ class _SignUpBodyState extends State<SignUpBody> {
               ],
             ),
           );
-        }
-    );
+        });
   }
 
   void submitFormOnSignup() async {
     final isValid = signUpFormKey.currentState!.validate();
     if (isValid) {
       if (_image == null) {
-        showDialog(context: context, builder: (context) {
-          return ErrorAlertDialog(
-            Message: 'Please pick an image',
-          );
-        }
-        );
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ErrorAlertDialog(
+                Message: 'Please pick an image',
+              );
+            });
         return;
       }
       setState(() {
@@ -137,35 +136,36 @@ class _SignUpBodyState extends State<SignUpBody> {
       });
       try {
         await _auth.createUserWithEmailAndPassword(
-            email: _emailController.text.trim().toLowerCase(),
-            password: _passwordController.text.trim(),
+          email: _emailController.text.trim().toLowerCase(),
+          password: _passwordController.text.trim(),
         );
 
         final User? user = _auth.currentUser;
         uid = user!.uid;
 
-        final ref = FirebaseStorage.instance.ref().child('userImages').child(uid + '.jpg');
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('userImages')
+            .child(uid + '.jpg');
         await ref.putFile(_image!);
         userPhotoUrl = await ref.getDownloadURL();
-        FirebaseFirestore.instance.collection('users').doc(uid).set(
-            {'userName': _nameController.text.trim(),
-             'id': uid,
-              'userNumber': _phoneController.text.trim(),
-              'userEmail': _emailController.text,
-              'userImage': userPhotoUrl,
-              'time': DateTime.now(),
-              'status': 'approved',
-          }
-        );
+        FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'userName': _nameController.text.trim(),
+          'id': uid,
+          'userNumber': _phoneController.text.trim(),
+          'userEmail': _emailController.text,
+          'userImage': userPhotoUrl,
+          'time': DateTime.now(),
+          'status': 'approved',
+        });
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()
-            ));
-      }
-      catch(error){
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      } catch (error) {
         setState(() {
           _isLoading = false;
         });
-        ErrorAlertDialog(Message: error.toString(),
+        ErrorAlertDialog(
+          Message: error.toString(),
         );
       }
     }
@@ -176,20 +176,15 @@ class _SignUpBodyState extends State<SignUpBody> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width,
-        screenHeight = MediaQuery
-            .of(context)
-            .size
-            .height;
+    double screenWidth = MediaQuery.of(context).size.width,
+        screenHeight = MediaQuery.of(context).size.height;
     return SignUpBackground(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Form(key: signUpFormKey,
+            Form(
+              key: signUpFormKey,
               child: InkWell(
                 onTap: () {
                   _showImageDisplay();
@@ -197,20 +192,20 @@ class _SignUpBodyState extends State<SignUpBody> {
                 child: CircleAvatar(
                   radius: screenWidth * 0.20,
                   backgroundColor: Colors.white24,
-                  backgroundImage: _image == null
-                      ? null
-                      : FileImage(_image!),
+                  backgroundImage: _image == null ? null : FileImage(_image!),
                   child: _image == null
                       ? Icon(
-                    Icons.camera_enhance,
-                    size: screenWidth * 0.180,
-                    color: Colors.black54,
-                  )
+                          Icons.camera_enhance,
+                          size: screenWidth * 0.180,
+                          color: Colors.black54,
+                        )
                       : null,
                 ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.02,),
+            SizedBox(
+              height: screenHeight * 0.02,
+            ),
             RoundedInputField(
               hintText: 'Name',
               icon: Icons.person,
@@ -237,13 +232,17 @@ class _SignUpBodyState extends State<SignUpBody> {
                 _passwordController.text = value;
               },
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(
+              height: 5,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ForgotPassword()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPassword()));
                 },
                 child: Text(
                   'Forget Password?',
@@ -256,28 +255,28 @@ class _SignUpBodyState extends State<SignUpBody> {
               ),
             ),
             _isLoading
-                ?
-            Center(
-              child: Container(
-                width: 70,
-                height: 70,
-                child: const CircularProgressIndicator(),
-              ),
-            )
-                :
-            RoundedButton(
-              text: 'SIGN UP',
-              press: () {
-                submitFormOnSignup();
-              },
+                ? Center(
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      child: const CircularProgressIndicator(),
+                    ),
+                  )
+                : RoundedButton(
+                    text: 'SIGN UP',
+                    press: () {
+                      submitFormOnSignup();
+                    },
+                  ),
+            SizedBox(
+              height: screenHeight * 0.03,
             ),
-            SizedBox(height: screenHeight * 0.03,),
             AlreadyHaveAnAccount(
-                login: false,
-                press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                },
+              login: false,
+              press: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
             ),
           ],
         ),
