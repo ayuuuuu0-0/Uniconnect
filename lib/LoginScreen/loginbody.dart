@@ -20,7 +20,6 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -30,49 +29,56 @@ class _LoginBodyState extends State<LoginBody> {
     showDialog(
         context: context,
         builder: (_) {
-          return LoadingAlertDialog(message: 'Please wait',);
-        }
-    );
+          return LoadingAlertDialog(
+            message: 'Please wait',
+          );
+        });
 
     User? currentUser;
-    await _auth.signInWithEmailAndPassword(
+    await _auth
+        .signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-    ).then((auth) {
+    )
+        .then((auth) {
       currentUser = auth.user;
     }).catchError((error) {
       Navigator.pop(context);
-      showDialog(context: context, builder: (context) {
-        return ErrorAlertDialog(Message: error.message.toString());
-      });
+      showDialog(
+          context: context,
+          builder: (context) {
+            return ErrorAlertDialog(Message: error.message.toString());
+          });
     });
-    if(currentUser != null){
+    if (currentUser != null) {
       //ignore: use_build_context_synchronously
       Navigator.pop(context);
       //ignore: use_build_Context_synchronously
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    }
-    else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
       print('error');
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return LoginBackground(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: size.height * 0.04,),
-            Image.asset('assets/images/login.png',
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            Image.asset(
+              'assets/images/login.png',
               height: size.height * 0.32,
             ),
-            SizedBox(height: size.height * 0.03,),
+            SizedBox(
+              height: size.height * 0.03,
+            ),
             RoundedInputField(
               hintText: 'Email',
               icon: Icons.person,
@@ -80,7 +86,9 @@ class _LoginBodyState extends State<LoginBody> {
                 _emailController.text = value;
               },
             ),
-            const SizedBox(height: 6,),
+            const SizedBox(
+              height: 6,
+            ),
             RoundedPasswordField(
               onChanged: (value) {
                 _passwordController.text = value;
@@ -91,10 +99,13 @@ class _LoginBodyState extends State<LoginBody> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ForgotPassword()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPassword()));
                 },
-                child: const Text('Forgot Password?',
+                child: const Text(
+                  'Forgot Password?',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 19,
@@ -106,17 +117,21 @@ class _LoginBodyState extends State<LoginBody> {
             RoundedButton(
               text: 'LOGIN',
               press: () {
-                _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty
+                _emailController.text.isNotEmpty &&
+                        _passwordController.text.isNotEmpty
                     ? _login()
                     : showDialog(
-                    context: context,
-                    builder: (context){
-                      return ErrorAlertDialog(
-                          Message: 'Please write email & password for Login');
-                    });
+                        context: context,
+                        builder: (context) {
+                          return ErrorAlertDialog(
+                              Message:
+                                  'Please write email & password for Login');
+                        });
               },
             ),
-            SizedBox(height: size.height * 0.03,),
+            SizedBox(
+              height: size.height * 0.03,
+            ),
             AlreadyHaveAnAccount(
               login: true,
               press: () {

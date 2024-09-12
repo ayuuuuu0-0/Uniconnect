@@ -18,12 +18,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   getMyData() {
-    FirebaseFirestore.instance.collection('users').doc(uid).get().then((
-        results) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((results) {
       setState(() {
         userImageurl = results.data()!['userImage'];
         getUserName = results.data()!['userName'];
@@ -31,18 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getUserAddress() async
-  {
+  getUserAddress() async {
     Position newPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
     position = newPosition;
 
-    placemarks = await
-    placemarkFromCoordinates(
-        position!.latitude,
-        position!.longitude
-    );
+    placemarks =
+        await placemarkFromCoordinates(position!.latitude, position!.longitude);
     Placemark placemark = placemarks![0];
 
     String newCompleteAddress =
@@ -68,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     userEmail = FirebaseAuth.instance.currentUser!.email!;
     getMyData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,8 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
             stops: [0.0, 1.0],
-            tileMode: TileMode.clamp
-        ),
+            tileMode: TileMode.clamp),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -87,45 +85,56 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
+                Navigator.pushReplacement(
+                    context,
                     MaterialPageRoute(
-                        builder: (context) => ProfileScreen(sellerId: uid,)));
+                        builder: (context) => ProfileScreen(
+                              sellerId: uid,
+                            )));
               },
-              child: const
-              Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Icon(Icons.person, color: Colors.white54,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.white54,
                 ),
               ),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
+                Navigator.pushReplacement(
+                    context,
                     MaterialPageRoute(
                         builder: (context) => const SearchProduct()));
               },
-              child: const
-              Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Icon(Icons.search, color: Colors.white54,),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.white54,
+                ),
               ),
             ),
             TextButton(
               onPressed: () {
                 _auth.signOut().then((value) {
-                  Navigator.pushReplacement(context,
+                  Navigator.pushReplacement(
+                      context,
                       MaterialPageRoute(
                           builder: (context) => const WelcomeScreen()));
                 });
               },
-              child: const
-              Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Icon(Icons.logout, color: Colors.white54,),
+                child: Icon(
+                  Icons.logout,
+                  color: Colors.white54,
+                ),
               ),
             ),
           ],
-          title: const Text("Home Screen",
+          title: const Text(
+            "Home Screen",
             style: TextStyle(
               color: Colors.white70,
               fontFamily: 'DM Sans',
@@ -147,13 +156,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('items').orderBy(
-              'time', descending: true).snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('items')
+              .orderBy('time', descending: true)
+              .snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator(),);
-            }
-            else if (snapshot.connectionState == ConnectionState.active) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.data!.docs.isNotEmpty) {
                 return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
@@ -181,19 +193,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 );
-              }
-              else {
+              } else {
                 return const Center(
-                  child: Text('There is no Tasks',),
+                  child: Text(
+                    'There is no Tasks',
+                  ),
                 );
               }
             }
             return Center(
               child: Text(
                 'Something went wrong',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             );
           },
@@ -201,8 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           tooltip: "Add Post",
           backgroundColor: Colors.black54,
-          onPressed: ()
-            {
+          onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UploadAdScreen()));
           },

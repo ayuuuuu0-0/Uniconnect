@@ -17,11 +17,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniConnect',
-      theme: ThemeData(
-        primaryColor: Color(0xFF01052A),
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Color(0xFF000000),
+        scaffoldBackgroundColor: Color(0xFF000000),
+        colorScheme: ColorScheme.dark(
+          primary: Color(0xFF000000),
+          secondary: Colors.indigoAccent,
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: Colors.white),
+          bodyText2: TextStyle(color: Colors.white),
+        ),
       ),
       home: SplashScreen(),
     );
   }
 }
-

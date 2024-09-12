@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Widgets/text_field_container.dart';
 
 class RoundedPasswordField extends StatefulWidget {
-
   final ValueChanged<String> onChanged;
 
   RoundedPasswordField({
@@ -23,22 +22,22 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
         obscureText: obscureText,
         onChanged: widget.onChanged,
         cursorColor: Colors.indigoAccent,
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: 'Password',
+          hintStyle: TextStyle(color: Colors.white54),
           icon: Icon(
             Icons.lock,
             color: Colors.indigoAccent,
           ),
           suffixIcon: GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
                 obscureText = !obscureText;
               });
             },
             child: Icon(
-              obscureText
-                  ? Icons.visibility_off
-                  :Icons.visibility,
+              obscureText ? Icons.visibility_off : Icons.visibility,
               color: Colors.black54,
             ),
           ),

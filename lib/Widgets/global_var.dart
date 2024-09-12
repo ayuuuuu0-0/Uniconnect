@@ -12,3 +12,4 @@ String adUserImageUrl = '';
 String adUserName = '';
 
 String colorExtension1 = '0xFF3A2C83';
+String colorExtension2 = '0xFF3A2C83';
