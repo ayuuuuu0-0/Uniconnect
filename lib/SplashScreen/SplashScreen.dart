@@ -48,15 +48,14 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 10.0,
             ),
             const Padding(
-              padding: EdgeInsets.all(18.0),
+              padding: EdgeInsets.all(20.0),
               child: Center(
                 child: Text(
-                  " Sell, Purchase or Rent College Essentials ",
+                  "sell & buy college essentials.",
                   style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "DM Sans",
+                    fontSize: 25.0,
+                    color: Colors.white70,
+                    fontFamily: "DMSerifText",
                   ),
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uniconnect/DialogBox/error_dialog.dart';
@@ -11,6 +12,7 @@ import 'package:uniconnect/ForgotPassword/forgot_password.dart';
 import 'package:uniconnect/LoginScreen/Login_Screen.dart';
 import 'package:uniconnect/SignUpScreen/signin_background.dart';
 import 'package:uniconnect/Widgets/Already_Registered.dart';
+import 'package:uniconnect/Widgets/Button.dart';
 import 'package:uniconnect/Widgets/rounded_button.dart';
 import 'package:uniconnect/Widgets/rounded_input_field.dart';
 import '../HomeScreen/HomeScreen.dart';
@@ -82,12 +84,12 @@ class _SignUpBodyState extends State<SignUpBody> {
                         padding: EdgeInsets.all(4.0),
                         child: Icon(
                           Icons.camera,
-                          color: Colors.purple,
+                          color: Colors.white,
                         ),
                       ),
                       Text(
                         'Camera',
-                        style: TextStyle(color: Colors.purple),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
@@ -102,12 +104,12 @@ class _SignUpBodyState extends State<SignUpBody> {
                         padding: EdgeInsets.all(4.0),
                         child: Icon(
                           Icons.image,
-                          color: Colors.purple,
+                          color: Colors.white,
                         ),
                       ),
                       Text(
                         'Gallery',
-                        style: TextStyle(color: Colors.purple),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
@@ -191,13 +193,13 @@ class _SignUpBodyState extends State<SignUpBody> {
                 },
                 child: CircleAvatar(
                   radius: screenWidth * 0.20,
-                  backgroundColor: Colors.white24,
+                  backgroundColor: Colors.white,
                   backgroundImage: _image == null ? null : FileImage(_image!),
                   child: _image == null
                       ? Icon(
                           Icons.camera_enhance,
                           size: screenWidth * 0.180,
-                          color: Colors.black54,
+                          color: Colors.black,
                         )
                       : null,
                 ),
@@ -247,7 +249,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                 child: Text(
                   'Forget Password?',
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.white70,
                     fontSize: 15,
                     fontStyle: FontStyle.italic,
                   ),
@@ -262,14 +264,16 @@ class _SignUpBodyState extends State<SignUpBody> {
                       child: const CircularProgressIndicator(),
                     ),
                   )
-                : RoundedButton(
+                : NeoPopButtonComponent(
+                    color: Colors.white,
                     text: 'SIGN UP',
-                    press: () {
+                    onTapDown: () => HapticFeedback.vibrate(),
+                    onTapUp: () {
                       submitFormOnSignup();
                     },
                   ),
             SizedBox(
-              height: screenHeight * 0.03,
+              height: screenHeight * 0.01,
             ),
             AlreadyHaveAnAccount(
               login: false,

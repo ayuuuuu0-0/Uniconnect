@@ -13,13 +13,7 @@ class WelcomeBackground extends StatelessWidget {
         .size;
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF54082A), Color(0xFF170615)],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp
-        ),
+        color: Colors.black
       ),
       height: size.height,
       width: double.infinity,
@@ -30,7 +24,7 @@ class WelcomeBackground extends StatelessWidget {
                 top: 0,
                 left: 0,
                 child: Image.asset("assets/images/main_top.png",
-                  color: Colors.deepPurple.shade300,
+                  color: Colors.white70,
                   width: size.width * 0.3,
                 ),
             ),
@@ -38,7 +32,7 @@ class WelcomeBackground extends StatelessWidget {
               bottom: 0,
               left: 0,
               child: Image.asset("assets/images/main_bottom.png",
-                color: Colors.deepPurple.shade300,
+                color: Colors.white,
                 width: size.width * 0.2,
               ),
             ),

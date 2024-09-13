@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:uniconnect/DialogBox/error_dialog.dart';
 import 'package:uniconnect/DialogBox/loading_dialog.dart';
 import 'package:uniconnect/ForgotPassword/forgot_password.dart';
@@ -9,6 +11,7 @@ import 'package:uniconnect/LoginScreen/loginbackground.dart';
 import 'package:uniconnect/LoginScreen/rounded_password_field.dart';
 import 'package:uniconnect/SignUpScreen/signin_page.dart';
 import 'package:uniconnect/Widgets/Already_Registered.dart';
+import 'package:uniconnect/Widgets/Button.dart';
 import 'package:uniconnect/Widgets/rounded_button.dart';
 import 'package:uniconnect/Widgets/rounded_input_field.dart';
 
@@ -72,8 +75,8 @@ class _LoginBodyState extends State<LoginBody> {
             SizedBox(
               height: size.height * 0.04,
             ),
-            Image.asset(
-              'assets/images/login.png',
+            Lottie.asset(
+              'assets/animation/login2.json',
               height: size.height * 0.32,
             ),
             SizedBox(
@@ -114,9 +117,11 @@ class _LoginBodyState extends State<LoginBody> {
                 ),
               ),
             ),
-            RoundedButton(
+            NeoPopButtonComponent(
+              color: Colors.white,
               text: 'LOGIN',
-              press: () {
+              onTapDown: () => HapticFeedback.vibrate(),
+              onTapUp: () {
                 _emailController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty
                     ? _login()
@@ -130,7 +135,7 @@ class _LoginBodyState extends State<LoginBody> {
               },
             ),
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.01,
             ),
             AlreadyHaveAnAccount(
               login: true,

@@ -21,14 +21,14 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
       child: TextFormField(
         obscureText: obscureText,
         onChanged: widget.onChanged,
-        cursorColor: Colors.indigoAccent,
-        style: TextStyle(color: Colors.white),
+        cursorColor: Colors.black,
+        style: TextStyle(color: Colors.black),
         decoration: InputDecoration(
           hintText: 'Password',
-          hintStyle: TextStyle(color: Colors.white54),
+          hintStyle: TextStyle(color: Colors.black54, fontFamily: 'Poppins'),
           icon: Icon(
             Icons.lock,
-            color: Colors.indigoAccent,
+            color: Colors.black,
           ),
           suffixIcon: GestureDetector(
             onTap: () {

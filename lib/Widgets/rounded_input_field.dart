@@ -17,15 +17,15 @@ class RoundedInputField extends StatelessWidget {
     return TextFieldContainer(
       child: TextField(
         onChanged: onChanged,
-        cursorColor: Colors.indigoAccent,
-        style: TextStyle(color: Colors.white),
+        cursorColor: Colors.black,
+        style: TextStyle(color: Colors.black),
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: Colors.indigoAccent,
+            color: Colors.black,
           ),
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.white54),
+          hintStyle: TextStyle(color: Colors.black54, fontFamily: 'Poppins'),
           border: InputBorder.none,
         ),
       ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:uniconnect/SignUpScreen/signin_page.dart';
 import 'package:uniconnect/WelcomeScreen/background.dart';
+import 'package:uniconnect/Widgets/Button.dart';
 import 'package:uniconnect/Widgets/rounded_button.dart';
 import '../LoginScreen/Login_Screen.dart';
+import "package:flutter/services.dart";
 
 class WelcomeBody extends StatelessWidget {
   const WelcomeBody({Key? key}) : super(key: key);
@@ -19,29 +22,35 @@ class WelcomeBody extends StatelessWidget {
               'College Cart',
               style: TextStyle(
                   fontSize: 60.0,
-                  fontWeight: FontWeight.bold,
+                  //fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontFamily: "Poppins"),
+                  fontFamily: "DMSerifText"),
             ),
             SizedBox(
               height: size.height * 0.05,
             ),
-            Image.asset(
-              'assets/images/newSplash2.png',
+            Lottie.asset(
+              'assets/animation/welcome.json',
               height: size.height * 0.40,
             ),
-            RoundedButton(
+            SizedBox(height: size.height * 0.1,),
+            NeoPopButtonComponent(
                 text: 'LOGIN',
-                press: () {
-                  Navigator.pushReplacement(
+                color: Colors.white,
+                onTapUp: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
-                }),
-            RoundedButton(
+                          builder: (context) => LoginScreen()));
+                },
+              onTapDown: () => HapticFeedback.vibrate(),),
+            SizedBox(height: 10),
+            NeoPopButtonComponent(
               text: 'SIGN UP',
-              press: () {
-                Navigator.pushReplacement(
+              color: Colors.white,
+              onTapDown: () => HapticFeedback.vibrate(),
+              onTapUp: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const SignUpScreen()));

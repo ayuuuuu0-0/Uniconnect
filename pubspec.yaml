@@ -33,6 +33,7 @@ dependencies:
   url_launcher: ^6.1.12
   flutter_launcher_icons: ^0.13.1
   lottie: ^3.0.0
+  neopop: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -88,3 +89,6 @@ flutter:
     - family: DM Sans
       fonts:
         - asset: assets/fonts/DMSans-Regular.ttf
+    - family: DMSerifText
+      fonts:
+        - asset: assets/fonts/DMSerifText-Regular.ttf
