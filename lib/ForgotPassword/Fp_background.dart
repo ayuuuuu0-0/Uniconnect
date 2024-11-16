@@ -12,13 +12,7 @@ class ForgetBackground extends StatelessWidget {
         .size;
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF54082A), Color(0xFF170615)],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp
-        ),
+        color: Colors.black
       ),
       height: size.height,
       width: double.infinity,

@@ -106,13 +106,7 @@ class _SearchProductState extends State<SearchProduct> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF170615), Color(0xFF54082A)],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp
-        ),
+        color: Colors.black
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -124,13 +118,7 @@ class _SearchProductState extends State<SearchProduct> {
           centerTitle: false,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF54082A), Color(0xFF170615)],
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp,
-              ),
+              color: Colors.black
             ),
           ),
         ),
@@ -156,7 +144,7 @@ class _SearchProductState extends State<SearchProduct> {
                       img2: snapshot.data!.docs[index]['urlImage2'],
                       img3: snapshot.data!.docs[index]['urlImage3'],
                       img4: snapshot.data!.docs[index]['urlImage4'],
-                      img5: snapshot.data!.docs[index]['urlImage5'],
+                      //img5: snapshot.data!.docs[index]['urlImage5'],
                       userImg: snapshot.data!.docs[index]['imgPro'],
                       name: snapshot.data!.docs[index]['userName'],
                       date: snapshot.data!.docs[index]['time'].toDate(),
@@ -165,10 +153,11 @@ class _SearchProductState extends State<SearchProduct> {
                       postId: snapshot.data!.docs[index]['postId'],
                       itemPrice: snapshot.data!.docs[index]['itemPrice'],
                       description: snapshot.data!.docs[index]['description'],
-                      lat: snapshot.data!.docs[index]['lat'],
-                      lng: snapshot.data!.docs[index]['lng'],
-                      address: snapshot.data!.docs[index]['address'],
+                      //lat: snapshot.data!.docs[index]['lat'],
+                      //lng: snapshot.data!.docs[index]['lng'],
+                      //address: snapshot.data!.docs[index]['address'],
                       userNumber: snapshot.data!.docs[index]['userNumber'],
+                      userEmail: snapshot.data!.docs[index]['userEmail'],
                     );
                   },
                 );

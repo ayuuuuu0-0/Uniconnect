@@ -110,7 +110,7 @@ class _LoginBodyState extends State<LoginBody> {
                 child: const Text(
                   'Forgot Password?',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 19,
                     fontStyle: FontStyle.italic,
                   ),

@@ -10,7 +10,7 @@ class ErrorAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       key: key,
-      content: Text(Message),
+      content: Text(Message, style: TextStyle(color: Colors.black),),
       actions: [
         ElevatedButton(onPressed: (){
           Navigator.pushReplacement

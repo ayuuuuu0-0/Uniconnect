@@ -15,7 +15,7 @@ class LoadingAlertDialog extends StatelessWidget {
         children: [
           circularProgress(),
           const SizedBox(height: 10,),
-          const Text('Please Wait...'),
+          const Text('Please Wait...', style: TextStyle(fontFamily: 'DMSerifText', color: Colors.white60),),
         ],
       ),
     );

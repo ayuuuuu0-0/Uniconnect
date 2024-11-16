@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:uniconnect/ChatPage/ChatPage.dart';
 import 'package:uniconnect/ProfileScreen/Profile_Screen.dart';
 import 'package:uniconnect/UploadAdScreen/upload_ad_screen.dart';
 import 'package:uniconnect/Widgets/listview_widget.dart';
@@ -33,34 +34,34 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getUserAddress() async {
-    Position newPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    position = newPosition;
-
-    placemarks =
-        await placemarkFromCoordinates(position!.latitude, position!.longitude);
-    Placemark placemark = placemarks![0];
-
-    String newCompleteAddress =
-        '${placemark.subThoroughfare} ${placemark.thoroughfare},'
-        '${placemark.subThoroughfare} ${placemark.locality},'
-        '${placemark.subAdministrativeArea}'
-        '${placemark.administrativeArea} ${placemark.postalCode},'
-        '${placemark.country},';
-
-    completeAddress = newCompleteAddress;
-    print(completeAddress);
-
-    return completeAddress;
-  }
+  // getUserAddress() async {
+  //   Position newPosition = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //
+  //   position = newPosition;
+  //
+  //   placemarks =
+  //       await placemarkFromCoordinates(position!.latitude, position!.longitude);
+  //   Placemark placemark = placemarks![0];
+  //
+  //   String newCompleteAddress =
+  //       '${placemark.subThoroughfare} ${placemark.thoroughfare},'
+  //       '${placemark.subThoroughfare} ${placemark.locality},'
+  //       '${placemark.subAdministrativeArea}'
+  //       '${placemark.administrativeArea} ${placemark.postalCode},'
+  //       '${placemark.country},';
+  //
+  //   completeAddress = newCompleteAddress;
+  //   print(completeAddress);
+  //
+  //   return completeAddress;
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserAddress();
+    //getUserAddress();
 
     uid = FirebaseAuth.instance.currentUser!.uid;
     userEmail = FirebaseAuth.instance.currentUser!.email!;
@@ -71,19 +72,25 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF54082A), Color(0xFF170615)],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp),
+        color: Colors.black,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          title: const Text(
+            "Home Screen",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'DMSerifText',
+              fontSize: 25,
+            ),
+          ),
+          centerTitle: false, // Keep the title on the left side
           actions: [
-            TextButton(
+            // All icons will be on the right side
+            IconButton(
+              icon: const Icon(Icons.person, color: Colors.white),
               onPressed: () {
                 Navigator.pushReplacement(
                     context,
@@ -92,30 +99,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               sellerId: uid,
                             )));
               },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white54,
-                ),
-              ),
             ),
-            TextButton(
+            IconButton(
+              icon: const Icon(Icons.message, color: Colors.white),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ChatListPage()));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const SearchProduct()));
               },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.white54,
-                ),
-              ),
             ),
-            TextButton(
+            IconButton(
+              icon: const Icon(Icons.logout, color: Colors.white),
               onPressed: () {
                 _auth.signOut().then((value) {
                   Navigator.pushReplacement(
@@ -124,34 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => const WelcomeScreen()));
                 });
               },
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.logout,
-                  color: Colors.white54,
-                ),
-              ),
             ),
           ],
-          title: const Text(
-            "Home Screen",
-            style: TextStyle(
-              color: Colors.white70,
-              fontFamily: 'DM Sans',
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: false,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF54082A), Color(0xFF170615)],
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp,
-              ),
+              color: Colors.black,
             ),
           ),
         ),
@@ -177,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       img2: snapshot.data!.docs[index]['urlImage2'],
                       img3: snapshot.data!.docs[index]['urlImage3'],
                       img4: snapshot.data!.docs[index]['urlImage4'],
-                      img5: snapshot.data!.docs[index]['urlImage5'],
+                      //img5: snapshot.data!.docs[index]['urlImage5'],
                       userImg: snapshot.data!.docs[index]['imgPro'],
                       name: snapshot.data!.docs[index]['userName'],
                       date: snapshot.data!.docs[index]['time'].toDate(),
@@ -186,10 +165,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       postId: snapshot.data!.docs[index]['postId'],
                       itemPrice: snapshot.data!.docs[index]['itemPrice'],
                       description: snapshot.data!.docs[index]['description'],
-                      lat: snapshot.data!.docs[index]['lat'],
-                      lng: snapshot.data!.docs[index]['lng'],
-                      address: snapshot.data!.docs[index]['address'],
+                      //lat: snapshot.data!.docs[index]['lat'],
+                      //lng: snapshot.data!.docs[index]['lng'],
+                      //address: snapshot.data!.docs[index]['address'],
                       userNumber: snapshot.data!.docs[index]['userNumber'],
+                      userEmail: snapshot.data!.docs[index]['userEmail'],
                     );
                   },
                 );
@@ -211,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           tooltip: "Add Post",
-          backgroundColor: Colors.black54,
+          backgroundColor: Colors.white38,
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UploadAdScreen()));

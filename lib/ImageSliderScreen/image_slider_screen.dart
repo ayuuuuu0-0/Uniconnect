@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slider/carousel.dart';
+import 'package:uniconnect/ChatPage/ChatPage.dart';
 import 'package:uniconnect/HomeScreen/HomeScreen.dart';
+import 'package:uniconnect/Widgets/global_var.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ImageSliderScreen extends StatefulWidget {
 
-  final String title, urlImage1, urlImage2, urlImage3, urlImage4, urlImage5;
-  final String itemColor, userNumber, description, address, itemPrice;
-  final double lat, lng;
+  final String title, urlImage1, urlImage2, urlImage3, urlImage4,
+      //urlImage5;
+  itemColor, userNumber, description, userEmail,
+      //address,
+      itemPrice;
+  //final double lat, lng;
 
   ImageSliderScreen({
     required this.title,
@@ -15,14 +20,15 @@ class ImageSliderScreen extends StatefulWidget {
     required this.urlImage2,
     required this.urlImage3,
     required this.urlImage4,
-    required this.urlImage5,
+    //required this.urlImage5,
     required this.itemColor,
     required this.userNumber,
+    required this.userEmail,
     required this.description,
-    required this.address,
+    //required this.address,
     required this.itemPrice,
-    required this.lat,
-    required this.lng,
+    //required this.lat,
+    //required this.lng,
 });
 
   @override
@@ -39,7 +45,7 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
     links.add(widget.urlImage2);
     links.add(widget.urlImage3);
     links.add(widget.urlImage4);
-    links.add(widget.urlImage5);
+    //links.add(widget.urlImage5);
   }
 
   @override
@@ -47,7 +53,7 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
     // TODO: implement initState
     super.initState();
     getLinks();
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
   }
 
   String? url;
@@ -59,26 +65,14 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
         .size;
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xFF170615), Color(0xFF54082A)],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp
-        ),
+        color: Colors.black
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0xFF170615), Color(0xFF54082A)],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp
-              ),
+              color: Colors.black
             ),
           ),
           title: Text(
@@ -106,20 +100,20 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.location_pin, color: Colors.white,),
-                    const SizedBox(width: 4.0,),
-                    Expanded(
-                      child: Text(
-                        widget.address,
-                        textAlign: TextAlign.justify,
-                        overflow: TextOverflow.fade,
-                        style: const TextStyle(
-                          fontFamily: 'Varela',
-                          letterSpacing: 2.0,
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                    ),
+                    //const Icon(Icons.location_pin, color: Colors.white,),
+                    //const SizedBox(width: 4.0,),
+                    // Expanded(
+                    //   child: Text(
+                    //     widget.address,
+                    //     textAlign: TextAlign.justify,
+                    //     overflow: TextOverflow.fade,
+                    //     style: const TextStyle(
+                    //       fontFamily: 'Varela',
+                    //       letterSpacing: 2.0,
+                    //       color: Colors.blueGrey,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -130,10 +124,10 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                 child: Padding(
                   padding: const EdgeInsets.all(2),
                   child: Carousel(
-                    indicatorBarColor: Colors.black.withOpacity(0.2),
+                    indicatorBarColor: Colors.white.withOpacity(0.2),
                     autoScrollDuration: const Duration(seconds: 2),
                     animationPageDuration: const Duration(milliseconds: 500),
-                    activateIndicatorColor: Colors.black,
+                    activateIndicatorColor: Colors.white,
                     animationPageCurve: Curves.easeIn,
                     indicatorBarHeight: 30,
                     indicatorHeight: 10,
@@ -145,7 +139,7 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                       Image.network(widget.urlImage2,),
                       Image.network(widget.urlImage3,),
                       Image.network(widget.urlImage4,),
-                      Image.network(widget.urlImage5,),
+                      //Image.network(widget.urlImage5,),
                     ],
                   ),
                 ),
@@ -156,7 +150,7 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                   child: Text(
                     '\₹ ${widget.itemPrice}',
                     style: const TextStyle(
-                        fontFamily: 'Bebas',
+                        fontFamily: "DMSerifText",
                         fontSize: 24,
                         letterSpacing: 2.0,
                         color: Colors.white54
@@ -173,15 +167,16 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(Icons.brush_outlined,
+                        const Icon(Icons.color_lens_rounded,
                           color: Colors.white60
                           ,),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
+                          padding: const EdgeInsets.only(left: 5.0),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(widget.itemColor,
                               style: const TextStyle(
+                                fontFamily: "DMSerifText",
                                 color: Colors.white60,
                                 fontSize: 20,
                               ),
@@ -192,14 +187,33 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                     ),
                     Row(
                       children: [
-                        Icon(Icons.phone, color: Colors.white60,),
-                        Padding(padding: EdgeInsets.only(left: 10.0),
+                        IconButton(onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewChatPage(otherUserEmail: widget.userEmail,)
+                              ),
+                          );
+                        }, icon: Icon(Icons.message_rounded)),
+                        //Icon(Icons.phone, color: Colors.white60,),
+                        Padding(padding: EdgeInsets.only(left: 5.0),
                           child: Align(
                             alignment: Alignment.topRight,
-                            child: Text(widget.userNumber,
-                              style: const TextStyle(
-                                color: Colors.white60,
-                                fontSize: 20,
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewChatPage(otherUserEmail: widget.userEmail,)
+                                  ),
+                                );
+                              },
+                              child: Text('Message',
+                                style: const TextStyle(
+                                  fontFamily: "DMSerifText",
+                                  color: Colors.white60,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),
@@ -215,38 +229,39 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> with SingleTicker
                   widget.description,
                   textAlign: TextAlign.justify,
                   style: const TextStyle(
+                    fontFamily: "DMSerifText",
                     color: Colors.white60,
                     fontSize: 20,
                   ),
                 ),
               ),
               SizedBox(height: 20,),
-              Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width: 368),
-                  child: ElevatedButton(
-                    onPressed: ()
-                    async
-                    {
-                      double latitude = widget.lat;
-                      double longitude = widget.lng;
-                      url = 'https://www.google.com/maps/search/?api=1&query=$latitude, $longitude';
-                      if(await canLaunchUrl(Uri.parse(url!)))
-                        {
-                          await launchUrl(Uri.parse(url!));
-                        }
-                      else
-                        {
-                          throw 'Could not open the map';
-                        }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black54),
-                    ),
-                    child: Text('Check Seller Location'),
-                  ),
-                ),
-              ),
+              // Center(
+              //   child: ConstrainedBox(
+              //     constraints: BoxConstraints.tightFor(width: 368),
+              //     child: ElevatedButton(
+              //       onPressed: ()
+              //       async
+              //       {
+              //         //double latitude = widget.lat;
+              //         //double longitude = widget.lng;
+              //         url = 'https://www.google.com/maps/search/?api=1&query=$latitude, $longitude';
+              //         if(await canLaunchUrl(Uri.parse(url!)))
+              //           {
+              //             await launchUrl(Uri.parse(url!));
+              //           }
+              //         else
+              //           {
+              //             throw 'Could not open the map';
+              //           }
+              //       },
+              //       style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.all(Colors.black54),
+              //       ),
+              //       child: Text('Check Seller Location'),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 20.0,),
             ],
           ),
